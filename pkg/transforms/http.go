@@ -103,17 +103,19 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 
 	var client *http.Client
 
+	var paths map[string]string
+
 	if usingHTTPS {
 		// load client certificate
 		cert, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
 		if err != nil {
-			fmt.Println("loading Client certificate failed.")
+			return false, err
 		}
 
 		// load CA certificate
 		caCert, err := ioutil.ReadFile(sender.CAFile)
 		if err != nil {
-			fmt.Println("loading CA certificate failed.")
+			return false, err
 		}
 		caCertPool := x509.NewCertPool()
 		caCertPool.AppendCertsFromPEM(caCert)
@@ -126,7 +128,12 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		tlsConfig.BuildNameToCertificate()
 		transport := &http.Transport{TLSClientConfig: tlsConfig}
 		client = &http.Client{Transport: transport}
-		fmt.Println("Using HTTPS configuration. It is correctly set up.")
+
+		paths, err = edgexcontext.GetSecrets(sender.CertFile, sender.KeyFile, sender.CAFile)
+		if err != nil {
+			return false, err
+		}
+		fmt.Println(paths[sender.CAFile])
 	} else {
 		client = &http.Client{}
 	}
