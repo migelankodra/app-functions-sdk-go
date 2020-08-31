@@ -55,7 +55,6 @@ const (
 	CertFile         = "clientcertfile"
 	KeyFile          = "clientkeyfile"
 	CAFile           = "cafile"
-	CertificatePaths = "certificatepaths"
 )
 
 // AppFunctionsSDKConfigurable contains the helper functions that return the function pointers for building the configurable function pipeline.
@@ -276,17 +275,13 @@ func (dynamic AppFunctionsSDKConfigurable) HTTPPost(parameters map[string]string
 	secretHeaderName := parameters[SecretHeaderName]
 	secretPath := parameters[SecretPath]
 
-	clientcertificatePath := parameters[certFile]
-	clientcertificateKey := parameters[keyFile]
-	cacertificatepath := parameters[caFile]
-
 	var transform transforms.HTTPSender
 	if secretHeaderName != "" && secretPath != "" {
 		fmt.Println("HTTP Sender With Secret Header is enabled")
 		transform = transforms.NewHTTPSenderWithSecretHeader(url, mimeType, persistOnError, secretHeaderName, secretPath)
-	} else if clientcertificatePath != "" && clientcertificateKey != "" && cacertificatepath != "" {
+	} else if certFile != "" && keyFile != "" && caFile != "" {
 		fmt.Println("HTTPS Sender is enabled")
-		transform = transforms.NewHTTPSSender(url, mimeType, persistOnError, clientcertificatePath, clientcertificateKey, cacertificatepath)
+		transform = transforms.NewHTTPSSender(url, mimeType, persistOnError, certFile, keyFile, caFile)
 	} else {
 		fmt.Println("Simple HTTP Sender is enabled")
 		transform = transforms.NewHTTPSender(url, mimeType, persistOnError)
