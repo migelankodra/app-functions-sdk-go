@@ -1,4 +1,4 @@
-module github.com/edgexfoundry/app-functions-sdk-go
+module github.com/migelankodra/app-functions-sdk-go
 
 go 1.13
 
