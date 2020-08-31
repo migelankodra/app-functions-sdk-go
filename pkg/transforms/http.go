@@ -103,8 +103,6 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 
 	var client *http.Client
 
-	var paths map[string]string
-
 	if usingHTTPS {
 		// load client certificate
 		cert, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
@@ -129,11 +127,6 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		transport := &http.Transport{TLSClientConfig: tlsConfig}
 		client = &http.Client{Transport: transport}
 
-		paths, err = edgexcontext.GetSecrets(sender.CertFile, sender.KeyFile, sender.CAFile)
-		if err != nil {
-			return false, err
-		}
-		fmt.Println(paths[sender.CAFile])
 	} else {
 		client = &http.Client{}
 	}
