@@ -284,7 +284,7 @@ func (dynamic AppFunctionsSDKConfigurable) HTTPPost(parameters map[string]string
 	if secretHeaderName != "" && secretPath != "" {
 		fmt.Println("HTTP Sender With Secret Header is enabled")
 		transform = transforms.NewHTTPSenderWithSecretHeader(url, mimeType, persistOnError, secretHeaderName, secretPath)
-	} else if certFile != "" && keyFile != "" && caFile != "" {
+	} else if clientcertificatePath != "" && clientcertificateKey != "" && cacertificatepath != "" {
 		fmt.Println("HTTPS Sender is enabled")
 		transform = transforms.NewHTTPSSender(url, mimeType, persistOnError, clientcertificatePath, clientcertificateKey, cacertificatepath)
 	} else {
