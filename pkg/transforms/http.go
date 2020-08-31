@@ -18,6 +18,8 @@ package transforms
 
 import (
 	"bytes"
+	"crypto/tls"
+	"crypto/x509"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -36,6 +38,9 @@ type HTTPSender struct {
 	PersistOnError   bool
 	SecretHeaderName string
 	SecretPath       string
+	CertFile         string
+	KeyFile          string
+	CAFile           string
 }
 
 // NewHTTPSender creates, initializes and returns a new instance of HTTPSender
@@ -53,6 +58,18 @@ func NewHTTPSenderWithSecretHeader(url string, mimeType string, persistOnError b
 		PersistOnError:   persistOnError,
 		SecretHeaderName: httpHeaderSecretName,
 		SecretPath:       secretPath,
+	}
+}
+
+// NewHTTPSSender creates, initializes and returns a new instance of HTTPSender
+func NewHTTPSSender(url string, mimeType string, persistOnError bool, certfile string, keyfile string, cafile string) HTTPSender {
+	return HTTPSender{
+		URL:            url,
+		MimeType:       mimeType,
+		PersistOnError: persistOnError,
+		CertFile:       certfile,
+		KeyFile:        keyfile,
+		CAFile:         cafile,
 	}
 }
 
@@ -79,7 +96,40 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		return false, err
 	}
 
-	client := &http.Client{}
+	usingHTTPS, err := sender.determineIfUsingHTTPS()
+	if err != nil {
+		return false, err
+	}
+
+	var client *http.Client
+
+	if usingHTTPS {
+		// load client certificate
+		cert, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
+		if err != nil {
+			fmt.Println("loading Client certificate failed.")
+		}
+
+		// load CA certificate
+		caCert, err := ioutil.ReadFile(sender.CAFile)
+		if err != nil {
+			fmt.Println("loading CA certificate failed.")
+		}
+		caCertPool := x509.NewCertPool()
+		caCertPool.AppendCertsFromPEM(caCert)
+
+		// setup HTTPS client
+		tlsConfig := &tls.Config{
+			Certificates: []tls.Certificate{cert},
+			RootCAs:      caCertPool,
+		}
+		tlsConfig.BuildNameToCertificate()
+		transport := &http.Transport{TLSClientConfig: tlsConfig}
+		client = &http.Client{Transport: transport}
+	} else {
+		client = &http.Client{}
+	}
+
 	req, err := http.NewRequest(http.MethodPost, sender.URL, bytes.NewReader(exportData))
 	if err != nil {
 		return false, err
@@ -137,6 +187,24 @@ func (sender HTTPSender) determineIfUsingSecrets() (bool, error) {
 	// using secrets, all required fields are provided
 	return true, nil
 
+}
+
+func (sender HTTPSender) determineIfUsingHTTPS() (bool, error) {
+	// Check if one field but not others are provided for https
+	if sender.CertFile != "" && sender.KeyFile == "" {
+		return false, errors.New("Client certificate was specified but not the client private key")
+	} else if sender.CertFile == "" && sender.KeyFile != "" {
+		return false, errors.New("Client private key was specified but not the client public certificate")
+	} else if sender.CertFile != "" && sender.KeyFile != "" && sender.CAFile == "" {
+		return false, errors.New("CA public certificate was not specified")
+	}
+
+	// If not specified, not using HTTPS
+	if sender.CertFile == "" && sender.KeyFile == "" && sender.CAFile == "" {
+		return false, nil
+	}
+
+	return true, nil
 }
 
 func (sender HTTPSender) setRetryData(ctx *appcontext.Context, exportData []byte) {

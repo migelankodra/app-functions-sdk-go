@@ -52,6 +52,9 @@ const (
 	ClientID         = "clientid"
 	Topic            = "topic"
 	AuthMode         = "authmode"
+	CertFile         = "clientcertfile"
+	KeyFile          = "clientkeyfile"
+	CAFile           = "cafile"
 )
 
 // AppFunctionsSDKConfigurable contains the helper functions that return the function pointers for building the configurable function pipeline.
@@ -245,14 +248,38 @@ func (dynamic AppFunctionsSDKConfigurable) HTTPPost(parameters map[string]string
 		}
 	}
 
+	certFile, ok := parameters[CertFile]
+	if !ok {
+		dynamic.Sdk.LoggingClient.Error("Could not find " + CertFile)
+		return nil
+	}
+
+	keyFile, ok := parameters[KeyFile]
+	if !ok {
+		dynamic.Sdk.LoggingClient.Error("Could not find " + KeyFile)
+		return nil
+	}
+
+	caFile, ok := parameters[CAFile]
+	if !ok {
+		dynamic.Sdk.LoggingClient.Error("Could not find " + CAFile)
+		return nil
+	}
+
 	url = strings.TrimSpace(url)
 	mimeType = strings.TrimSpace(mimeType)
+	certFile = strings.TrimSpace(certFile)
+	keyFile = strings.TrimSpace(keyFile)
+	caFile = strings.TrimSpace(caFile)
 
 	secretHeaderName := parameters[SecretHeaderName]
 	secretPath := parameters[SecretPath]
+
 	var transform transforms.HTTPSender
 	if secretHeaderName != "" && secretPath != "" {
 		transform = transforms.NewHTTPSenderWithSecretHeader(url, mimeType, persistOnError, secretHeaderName, secretPath)
+	} else if certFile != "" && keyFile != "" && caFile != "" {
+		transform = transforms.NewHTTPSSender(url, mimeType, persistOnError, certFile, keyFile, caFile)
 	} else {
 		transform = transforms.NewHTTPSender(url, mimeType, persistOnError)
 	}
