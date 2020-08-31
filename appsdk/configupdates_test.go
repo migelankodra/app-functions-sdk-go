@@ -26,8 +26,8 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
 )
 
 func TestWaitForConfigUpdates_InsecureSecrets(t *testing.T) {

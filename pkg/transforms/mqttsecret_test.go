@@ -23,8 +23,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

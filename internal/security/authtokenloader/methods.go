@@ -22,7 +22,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security/fileioperformer"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security/fileioperformer"
 )
 
 type tokenProvider struct {

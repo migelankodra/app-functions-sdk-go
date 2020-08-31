@@ -18,7 +18,7 @@ package models
 import (
 	"errors"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/contracts"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/contracts"
 
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson/primitive"

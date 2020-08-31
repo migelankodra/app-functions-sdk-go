@@ -22,9 +22,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
-	"github.com/edgexfoundry/app-functions-sdk-go/pkg/util"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/command"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/coredata"
@@ -32,6 +29,9 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/notifications"
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
 	"github.com/google/uuid"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/pkg/util"
 )
 
 // AppFunction is a type alias for func(edgexcontext *appcontext.Context, params ...interface{}) (bool, interface{})

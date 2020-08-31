@@ -20,8 +20,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
 )
 
 // Filter houses various the parameters for which filter transforms filter on

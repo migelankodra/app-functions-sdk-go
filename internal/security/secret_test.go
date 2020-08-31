@@ -28,8 +28,8 @@ import (
 
 	"github.com/edgexfoundry/go-mod-bootstrap/config"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security/mock"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security/mock"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
 

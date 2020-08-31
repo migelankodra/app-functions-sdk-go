@@ -18,8 +18,8 @@ package transforms
 import (
 	"errors"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/pkg/util"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/pkg/util"
 )
 
 type CoreData struct {

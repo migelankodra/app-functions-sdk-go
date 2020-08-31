@@ -21,13 +21,13 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/runtime"
 	"github.com/edgexfoundry/go-mod-bootstrap/bootstrap"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
 	"github.com/edgexfoundry/go-mod-messaging/messaging"
 	"github.com/edgexfoundry/go-mod-messaging/pkg/types"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/runtime"
 )
 
 // Trigger implements Trigger to support MessageBusData

@@ -23,11 +23,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/contracts"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/db"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/db/interfaces"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/db/mongo/models"
+	"github.com/migelankodra/app-functions-sdk-go/internal"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/contracts"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/db"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/db/interfaces"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/db/mongo/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

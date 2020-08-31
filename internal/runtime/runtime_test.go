@@ -26,13 +26,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/pkg/transforms"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
 	"github.com/edgexfoundry/go-mod-messaging/pkg/types"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/pkg/transforms"
 )
 
 var lc logger.LoggingClient

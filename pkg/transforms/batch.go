@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/pkg/util"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/pkg/util"
 )
 
 // BatchMode Enum for choosing behavior of Batch. Default is CountAndTime.

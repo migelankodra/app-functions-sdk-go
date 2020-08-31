@@ -25,8 +25,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/contracts"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/db"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/contracts"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/db"
 
 	"github.com/google/uuid"
 )

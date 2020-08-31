@@ -23,7 +23,7 @@ import (
 	"github.com/edgexfoundry/go-mod-bootstrap/bootstrap/startup"
 	"github.com/edgexfoundry/go-mod-bootstrap/di"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/telemetry"
+	"github.com/migelankodra/app-functions-sdk-go/internal/telemetry"
 )
 
 // Telemetry contains references to dependencies required by the Telemetry bootstrap implementation.

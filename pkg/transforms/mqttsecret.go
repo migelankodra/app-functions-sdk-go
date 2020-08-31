@@ -25,9 +25,9 @@ import (
 	"time"
 
 	MQTT "github.com/eclipse/paho.mqtt.golang"
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/pkg/util"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/pkg/util"
 )
 
 // MQTTSecretSender ...

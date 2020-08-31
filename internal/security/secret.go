@@ -24,11 +24,11 @@ import (
 
 	bootstrapConfig "github.com/edgexfoundry/go-mod-bootstrap/config"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security/authtokenloader"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security/client"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security/fileioperformer"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/db"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security/authtokenloader"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security/client"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security/fileioperformer"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/db"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
 

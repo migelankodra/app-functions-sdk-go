@@ -18,7 +18,7 @@ package container
 import (
 	"github.com/edgexfoundry/go-mod-bootstrap/di"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
 )
 
 // SecretProviderName contains the name of the security.SecretProvider implementation in the DIC.

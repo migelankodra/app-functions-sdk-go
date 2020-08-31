@@ -28,11 +28,11 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v2/dtos/common"
 	"github.com/gorilla/mux"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal"
-	sdkCommon "github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/telemetry"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/v2/dtos/requests"
+	"github.com/migelankodra/app-functions-sdk-go/internal"
+	sdkCommon "github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/internal/telemetry"
+	"github.com/migelankodra/app-functions-sdk-go/internal/v2/dtos/requests"
 )
 
 // V2HttpController controller for V2 REST APIs

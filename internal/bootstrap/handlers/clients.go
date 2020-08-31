@@ -27,8 +27,8 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/notifications"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/urlclient/local"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/bootstrap/container"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/bootstrap/container"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
 )
 
 // Clients contains references to dependencies required by the Clients bootstrap implementation.

@@ -23,11 +23,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/security"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/telemetry"
-	v2 "github.com/edgexfoundry/app-functions-sdk-go/internal/v2/controller/http"
+	"github.com/migelankodra/app-functions-sdk-go/internal"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/security"
+	"github.com/migelankodra/app-functions-sdk-go/internal/telemetry"
+	v2 "github.com/migelankodra/app-functions-sdk-go/internal/v2/controller/http"
 
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients/logger"
@@ -320,7 +320,7 @@ func (webserver *WebServer) ConfigureStandardRoutes() {
 //     name: Data Event
 //     description: |
 //       This is the data that will processed the configured pipeline. Typically this is an EdgeX event as described below, however, it can
-//       ingest other forms of data if a custom Target Type (https://github.com/edgexfoundry/app-functions-sdk-go/blob/master/README.md#target-type) is being used.
+//       ingest other forms of data if a custom Target Type (https://github.com/migelankodra/app-functions-sdk-go/blob/master/README.md#target-type) is being used.
 //     required: true
 //     schema:
 //       "$ref": "#/definitions/Event"

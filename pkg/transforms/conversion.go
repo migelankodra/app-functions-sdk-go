@@ -21,8 +21,8 @@ import (
 	"encoding/xml"
 	"errors"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
 )
 
 // Conversion houses various built in conversion transforms (XML, JSON, CSV)

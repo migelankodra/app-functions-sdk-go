@@ -29,7 +29,7 @@ import (
 
 	"github.com/edgexfoundry/go-mod-core-contracts/models"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
 )
 
 var context *appcontext.Context

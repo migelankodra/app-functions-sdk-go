@@ -20,7 +20,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/store/contracts"
+	"github.com/migelankodra/app-functions-sdk-go/internal/store/contracts"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 

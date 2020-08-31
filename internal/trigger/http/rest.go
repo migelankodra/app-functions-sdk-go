@@ -23,14 +23,14 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/edgexfoundry/app-functions-sdk-go/appcontext"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/common"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/runtime"
-	"github.com/edgexfoundry/app-functions-sdk-go/internal/webserver"
 	"github.com/edgexfoundry/go-mod-bootstrap/bootstrap"
 	"github.com/edgexfoundry/go-mod-core-contracts/clients"
 	"github.com/edgexfoundry/go-mod-messaging/pkg/types"
+	"github.com/migelankodra/app-functions-sdk-go/appcontext"
+	"github.com/migelankodra/app-functions-sdk-go/internal"
+	"github.com/migelankodra/app-functions-sdk-go/internal/common"
+	"github.com/migelankodra/app-functions-sdk-go/internal/runtime"
+	"github.com/migelankodra/app-functions-sdk-go/internal/webserver"
 )
 
 // Trigger implements Trigger to support Triggers
