@@ -277,10 +277,13 @@ func (dynamic AppFunctionsSDKConfigurable) HTTPPost(parameters map[string]string
 
 	var transform transforms.HTTPSender
 	if secretHeaderName != "" && secretPath != "" {
+		fmt.Println("HTTP Sender With Secret Header is enabled")
 		transform = transforms.NewHTTPSenderWithSecretHeader(url, mimeType, persistOnError, secretHeaderName, secretPath)
 	} else if certFile != "" && keyFile != "" && caFile != "" {
+		fmt.Println("HTTPS Sender is enabled")
 		transform = transforms.NewHTTPSSender(url, mimeType, persistOnError, certFile, keyFile, caFile)
 	} else {
+		fmt.Println("Simple HTTP Sender is enabled")
 		transform = transforms.NewHTTPSender(url, mimeType, persistOnError)
 	}
 	dynamic.Sdk.LoggingClient.Debug("HTTP Post Parameters", Url, transform.URL, MimeType, transform.MimeType)
