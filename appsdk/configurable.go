@@ -238,7 +238,7 @@ func (dynamic AppFunctionsSDKConfigurable) HTTPPost(parameters map[string]string
 	}
 
 	// PersistOnError is optional and is false by default.
-	persistOnError := false
+	persistOnError := true
 	value, ok := parameters[PersistOnError]
 	if ok {
 		persistOnError, err = strconv.ParseBool(value)
