@@ -128,7 +128,8 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		// setup HTTPS client
 		fmt.Println("configuring tlsConfiguration")
 		tlsConfig := &tls.Config{
-			Certificates: []tls.Certificate{cert},
+			Certificates:  []tls.Certificate{cert},
+			Renegotiation: tls.RenegotiateOnceAsClient,
 			//			RootCAs:            caCertPool,
 			InsecureSkipVerify: true,
 		}
