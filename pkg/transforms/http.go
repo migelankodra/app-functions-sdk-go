@@ -128,12 +128,10 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		// setup HTTPS client
 		fmt.Println("configuring tlsConfiguration")
 		tlsConfig := &tls.Config{
+			Certificates: []tls.Certificate{cert},
+			//			RootCAs:            caCertPool,
 			InsecureSkipVerify: true,
-			Certificates:       []tls.Certificate{cert},
-			RootCAs:            caCertPool,
 		}
-
-		fmt.Println("CA Cert Pool", caCertPool)
 
 		tlsConfig.BuildNameToCertificate()
 		fmt.Println("Configuring transport...")
