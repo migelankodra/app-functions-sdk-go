@@ -112,7 +112,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		if err != nil {
 			return false, err
 		}
-
+		fmt.Println(cert)
 		fmt.Println("Sender Public Certificate", sender.CertFile)
 
 		// load CA certificate
