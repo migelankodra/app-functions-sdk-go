@@ -120,8 +120,9 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 
 		// setup HTTPS client
 		tlsConfig := &tls.Config{
-			Certificates: []tls.Certificate{cert},
-			RootCAs:      caCertPool,
+			Certificates:       []tls.Certificate{cert},
+			RootCAs:            caCertPool,
+			InsecureSkipVerify: true,
 		}
 		tlsConfig.BuildNameToCertificate()
 		transport := &http.Transport{TLSClientConfig: tlsConfig}
