@@ -121,16 +121,17 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		if err != nil {
 			return false, err
 		}
-		caCertPool := x509.NewCertPool()
+		//		caCertPool := x509.NewCertPool()
+		caCertPool := x509.SystemCertPool()
 		caCertPool.AppendCertsFromPEM(caCert)
 		fmt.Println("CA Public Certificate", sender.CAFile)
 
 		// setup HTTPS client
 		fmt.Println("configuring tlsConfiguration")
 		tlsConfig := &tls.Config{
-			Certificates:  []tls.Certificate{cert},
-			Renegotiation: tls.RenegotiateOnceAsClient,
-			//			RootCAs:            caCertPool,
+			Certificates:       []tls.Certificate{cert},
+			Renegotiation:      tls.RenegotiateOnceAsClient,
+			RootCAs:            caCertPool,
 			InsecureSkipVerify: true,
 		}
 
