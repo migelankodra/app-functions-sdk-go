@@ -101,6 +101,8 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		return false, err
 	}
 
+	fmt.Println("usingHTTPS", usingHTTPS)
+
 	var client *http.Client
 
 	if usingHTTPS {
