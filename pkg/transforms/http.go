@@ -159,6 +159,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	fmt.Println("POSTing data")
 	response, err := client.Do(req)
 	if err != nil {
+		fmt.Println("Response: ", response)
 		sender.setRetryData(edgexcontext, exportData)
 		return false, err
 	}
