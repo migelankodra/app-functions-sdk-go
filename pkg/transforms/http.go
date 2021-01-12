@@ -122,7 +122,10 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 			return false, err
 		}
 		//		caCertPool := x509.NewCertPool()
-		caCertPool := x509.SystemCertPool()
+		caCertPool, err := x509.SystemCertPool()
+		if err != nil {
+			fmt.Println(err)
+		}
 		caCertPool.AppendCertsFromPEM(caCert)
 		fmt.Println("CA Public Certificate", sender.CAFile)
 
