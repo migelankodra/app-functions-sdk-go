@@ -121,8 +121,8 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		if err != nil {
 			return false, err
 		}
-		caCertPool := x509.NewCertPool()
-		//		caCertPool, err := x509.SystemCertPool()
+		// caCertPool := x509.NewCertPool()
+		caCertPool, err := x509.SystemCertPool()
 		if err != nil {
 			fmt.Println(err)
 		}
