@@ -147,7 +147,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		client = &http.Client{}
 	}
 
-	r, err := client.Get("https://apig-brickreply.westeurope.cloudapp.azure.com/qa-vertiv/IoTHub/Vertiv")
+	r, err := client.Get("https://qa-vertiv-brickreply.westeurope.cloudapp.azure.com:5151/api/IoTHub/Vertiv/Process")
 	if err != nil {
 		fmt.Println(err)
 	}
