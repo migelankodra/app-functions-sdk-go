@@ -122,7 +122,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 			return false, err
 		}
 		caCertPool := x509.NewCertPool()
-		//	caCertPool, err := x509.SystemCertPool()
+		//caCertPool, err := x509.SystemCertPool()
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -151,6 +151,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	if err != nil {
 		return false, err
 	}
+	fmt.Print(req)
 	var theSecrets map[string]string
 	if usingSecrets {
 		theSecrets, err = edgexcontext.GetSecrets(sender.SecretPath, sender.SecretHeaderName)
