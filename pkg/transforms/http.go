@@ -122,7 +122,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 			return false, err
 		}
 		caCertPool := x509.NewCertPool()
-		//caCertPool, err := x509.SystemCertPool()
+		//	caCertPool, err := x509.SystemCertPool()
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -146,6 +146,13 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	} else {
 		client = &http.Client{}
 	}
+
+	r, err := client.Get("https://apig-brickreply.westeurope.cloudapp.azure.com/qa-vertiv/IoTHub/Vertiv")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response: %s", r.Status))
 
 	req, err := http.NewRequest(http.MethodPost, sender.URL, bytes.NewReader(exportData))
 	if err != nil {
@@ -173,9 +180,7 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	}
 	defer response.Body.Close()
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response: %s", response.Status))
-	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response Body: %s", response.Body))
-	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response Request: %s", response.Request))
-	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response TLS: %s", response.TLS))
+	//	fmt.Println("Response: ", response.Status)
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Sent data: %s", string(exportData)))
 	//	fmt.Println("Sent data: ", string(exportData))
 	bodyBytes, errReadingBody := ioutil.ReadAll(response.Body)
