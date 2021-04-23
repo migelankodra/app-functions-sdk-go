@@ -151,7 +151,6 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	if err != nil {
 		return false, err
 	}
-	fmt.Println(req)
 	var theSecrets map[string]string
 	if usingSecrets {
 		theSecrets, err = edgexcontext.GetSecrets(sender.SecretPath, sender.SecretHeaderName)
@@ -174,9 +173,9 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	}
 	defer response.Body.Close()
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response: %s", response.Status))
-	fmt.Println("Response Body: \n", response.Body)
-	fmt.Println("Response Request: \n", response.Request)
-	fmt.Println("Response TLS: \n", response.TLS)
+	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response Body: %s", response.Body))
+	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response Request: %s", response.Request))
+	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response TLS: %s", response.TLS))
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Sent data: %s", string(exportData)))
 	//	fmt.Println("Sent data: ", string(exportData))
 	bodyBytes, errReadingBody := ioutil.ReadAll(response.Body)
