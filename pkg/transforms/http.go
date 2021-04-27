@@ -106,15 +106,16 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	var client *http.Client
 
 	if usingHTTPS {
-		// load client certificate
-		//		fmt.Println("Loading Certificate ...")
-		cert, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
-		if err != nil {
-			return false, err
-		}
+		/*
+			// load client certificate
+			//		fmt.Println("Loading Certificate ...")
+			cert, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
+			if err != nil {
+				return false, err
+			}
 
-		//		fmt.Println("Sender Public Certificate", sender.CertFile)
-
+			//		fmt.Println("Sender Public Certificate", sender.CertFile)
+		*/
 		// load CA certificate
 		//		fmt.Println("Loading CA Certificate")
 		caCert, err := ioutil.ReadFile(sender.CAFile)
@@ -123,22 +124,45 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 		}
 		caCertPool := x509.NewCertPool()
 		//	caCertPool, err := x509.SystemCertPool()
-		if err != nil {
-			fmt.Println(err)
-		}
+		//		if err != nil {
+		//			fmt.Println(err)
+		//		}
 		caCertPool.AppendCertsFromPEM(caCert)
 		//		fmt.Println("CA Public Certificate", sender.CAFile)
 
 		// setup HTTPS client
 		//		fmt.Println("configuring tlsConfiguration")
 		tlsConfig := &tls.Config{
-			Certificates:  []tls.Certificate{cert},
-			Renegotiation: tls.RenegotiateOnceAsClient,
-			RootCAs:       caCertPool,
+			//			Certificates:  []tls.Certificate{cert},
+			//			Renegotiation: tls.RenegotiateOnceAsClient,
+			RootCAs: caCertPool,
 			//			InsecureSkipVerify: true,
+			GetClientCertificate: func(info *tls.CertificateRequestInfo) (certificate *tls.Certificate, e error) {
+				fmt.Println("Get Client Certificate")
+				fmt.Println("Path: ", sender.CertFile)
+				c, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
+				if err != nil {
+					fmt.Printf("Error loading client key pair: %v\n", err)
+					return nil, err
+				}
+				return &c, nil
+			},
+
+			VerifyPeerCertificate: func(rawCerts [][]byte, chains [][]*x509.Certificate) error {
+				if len(chains) > 0 {
+					fmt.Println("Verified certificate chain from peer:")
+					for _, v := range chains {
+						for i, cert := range v {
+							fmt.Printf("  Cert %d:\n", i)
+							fmt.Printf(CertificateInfo(cert))
+						}
+					}
+				}
+				return nil
+			},
 		}
 
-		tlsConfig.BuildNameToCertificate()
+		//		tlsConfig.BuildNameToCertificate()
 		//		fmt.Println("Configuring transport...")
 		transport := &http.Transport{TLSClientConfig: tlsConfig}
 		client = &http.Client{Transport: transport}
@@ -146,13 +170,6 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	} else {
 		client = &http.Client{}
 	}
-
-	r, err := client.Get("https://qa-vertiv-brickreply.westeurope.cloudapp.azure.com:5151/api/IoTHub/Vertiv/Process")
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response: %s", r.Status))
 
 	req, err := http.NewRequest(http.MethodPost, sender.URL, bytes.NewReader(exportData))
 	if err != nil {
@@ -244,4 +261,17 @@ func (sender HTTPSender) setRetryData(ctx *appcontext.Context, exportData []byte
 	if sender.PersistOnError {
 		ctx.RetryData = exportData
 	}
+}
+
+func CertificateInfo(cert *x509.Certificate) string {
+	if cert.Subject.CommonName == cert.Issuer.CommonName {
+		return fmt.Sprintf("    Self-signed certificate %v\n", cert.Issuer.CommonName)
+	}
+
+	s := fmt.Sprintf("    Subject %v\n", cert.DNSNames)
+	s += fmt.Sprintf("    Usage %v\n", cert.ExtKeyUsage)
+	s += fmt.Sprintf("    Subject %s\n", cert.Subject.CommonName)
+	s += fmt.Sprintf("    Issued by %s\n", cert.Issuer.CommonName)
+	s += fmt.Sprintf("    Issued by %s\n", cert.Issuer.SerialNumber)
+	return s
 }
