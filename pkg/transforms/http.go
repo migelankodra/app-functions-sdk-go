@@ -138,11 +138,11 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 			RootCAs: caCertPool,
 			//			InsecureSkipVerify: true,
 			GetClientCertificate: func(info *tls.CertificateRequestInfo) (certificate *tls.Certificate, e error) {
-				fmt.Println("Get Client Certificate")
-				fmt.Println("Path: ", sender.CertFile)
+				//				fmt.Println("Get Client Certificate")
+				//				fmt.Println("Path: ", sender.CertFile)
 				c, err := tls.LoadX509KeyPair(sender.CertFile, sender.KeyFile)
 				if err != nil {
-					fmt.Printf("Error loading client key pair: %v\n", err)
+					edgexcontext.LoggingClient.Error("Error loading client key pair: %v\n", err)
 					return nil, err
 				}
 				return &c, nil
@@ -150,11 +150,11 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 
 			VerifyPeerCertificate: func(rawCerts [][]byte, chains [][]*x509.Certificate) error {
 				if len(chains) > 0 {
-					fmt.Println("Verified certificate chain from peer:")
+					//					fmt.Println("Verified certificate chain from peer:")
 					for _, v := range chains {
 						for i, cert := range v {
-							fmt.Printf("  Cert %d:\n", i)
-							fmt.Printf(CertificateInfo(cert))
+							edgexcontext.LoggingClient.Debug("Cert %d:\n", i)
+							edgexcontext.LoggingClient.Debug(CertificateInfo(cert))
 						}
 					}
 				}
@@ -188,18 +188,15 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 	req.Header.Set("Content-Type", sender.MimeType)
 
 	edgexcontext.LoggingClient.Info("POSTing data")
-	//	fmt.Println("POSTing data")
 	response, err := client.Do(req)
 	if err != nil {
-		fmt.Println("Response: ", response)
 		sender.setRetryData(edgexcontext, exportData)
 		return false, err
 	}
 	defer response.Body.Close()
+
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Response: %s", response.Status))
-	//	fmt.Println("Response: ", response.Status)
 	edgexcontext.LoggingClient.Info(fmt.Sprintf("Sent data: %s", string(exportData)))
-	//	fmt.Println("Sent data: ", string(exportData))
 	bodyBytes, errReadingBody := ioutil.ReadAll(response.Body)
 	if errReadingBody != nil {
 		sender.setRetryData(edgexcontext, exportData)
@@ -208,9 +205,6 @@ func (sender HTTPSender) HTTPPost(edgexcontext *appcontext.Context, params ...in
 
 	edgexcontext.LoggingClient.Trace("Data exported", "Transport", "HTTP", clients.CorrelationHeader, edgexcontext.CorrelationID)
 	edgexcontext.LoggingClient.Info("Data exported", "Transport", "HTTP", clients.CorrelationHeader, edgexcontext.CorrelationID)
-	//	fmt.Println("Data exported", "Transport", "HTTP", clients.CorrelationHeader, edgexcontext.CorrelationID)
-
-	//	fmt.Println(response.StatusCode)
 
 	// continues the pipeline if we get a 2xx response, stops pipeline if non-2xx response
 	if response.StatusCode < 200 || response.StatusCode >= 300 {
